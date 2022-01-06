@@ -37,13 +37,6 @@ const invalidEmailError = {
   },
 };
 
-const userAlreadyExistsError = {
-  err: {
-    status: 409,
-    message: 'User already registered',
-  },
-};
-
 const validateDisplayName = (entry) => {
   const entryType = 'displayName';
   if (!entry) return getIsRequiredError(entryType);
@@ -91,4 +84,4 @@ const validateLogin = ({ email, password }) => {
   return NO_ERROR_MESSAGE;
 };
 
-module.exports = { validateUser, validateLogin, userAlreadyExistsError };
+module.exports = { validateUser, validateLogin };

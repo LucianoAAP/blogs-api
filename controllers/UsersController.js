@@ -11,6 +11,12 @@ const findAll = async (_req, res) => {
   return res.status(200).json(users);
 };
 
+const findById = async (req, res, next) => {
+  const user = await UsersService.findById(req.params.id);
+  if (user.err) return next(user.err);
+  return res.status(200).json(user);
+};
+
 const create = async (req, res, next) => {
   const entriesValidation = validateUser(req.body);
   if (entriesValidation.err) return next(entriesValidation.err);
@@ -21,4 +27,4 @@ const create = async (req, res, next) => {
   return res.status(201).json({ token });
 };
 
-module.exports = { findAll, create };
+module.exports = { findAll, findById, create };
