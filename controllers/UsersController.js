@@ -6,6 +6,11 @@ const { validateUser } = require('../utils/validations');
 const secret = process.env.JWT_SECRET;
 const jwtConfig = { expiresIn: '1h' };
 
+const findAll = async (_req, res) => {
+  const users = await UsersService.findAll();
+  return res.status(200).json(users);
+};
+
 const create = async (req, res, next) => {
   const entriesValidation = validateUser(req.body);
   if (entriesValidation.err) return next(entriesValidation.err);
@@ -16,4 +21,4 @@ const create = async (req, res, next) => {
   return res.status(201).json({ token });
 };
 
-module.exports = { create };
+module.exports = { findAll, create };
