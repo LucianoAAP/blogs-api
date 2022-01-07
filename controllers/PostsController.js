@@ -33,4 +33,12 @@ const update = async (req, res, next) => {
   return res.status(200).json(post);
 };
 
-module.exports = { findAll, findById, create, update };
+const remove = async (req, res, next) => {
+  const { id } = req.params;
+  const userId = req.user.id;
+  const post = await PostsService.remove({ id, userId });
+  if (post.err) return next(post.err);
+  return res.status(204).json(post);
+};
+
+module.exports = { findAll, findById, create, update, remove };

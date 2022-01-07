@@ -70,6 +70,7 @@ const create = async ({ title, content, userId, categoryIds }) => {
 const update = async ({ id, title, content, userId, categoryIds }) => {
   if (categoryIds) return editCategoriesError;
   const currentPost = await BlogPost.findByPk(id);
+  if (!currentPost) return postDoesntExistError;
   if (currentPost.userId !== userId) return unauthorizedUserError;
   await BlogPost.update(
     { title, content, updated: new Date() },
@@ -82,4 +83,12 @@ const update = async ({ id, title, content, userId, categoryIds }) => {
   return newPost;
 };
 
-module.exports = { findAll, findById, create, update };
+const remove = async ({ id, userId }) => {
+  const post = await BlogPost.findByPk(id);
+  if (!post) return postDoesntExistError;
+  if (post.userId !== userId) return unauthorizedUserError;
+  await BlogPost.destroy({ where: { id } });
+  return post;
+};
+
+module.exports = { findAll, findById, create, update, remove };
