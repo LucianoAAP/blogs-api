@@ -31,20 +31,29 @@ const sequelize = new Sequelize(
   process.env.NODE_ENV === 'test' ? config.test : config.development,
 );
 
+const { Op } = Sequelize;
+
 const findAll = async () => (BlogPost.findAll({
   include: [{ model: User, as: 'user' },
-  { model: Category, as: 'categories', through: { attributes: [] } }],
+    { model: Category, as: 'categories', through: { attributes: [] } }],
 }));
 
 const findById = async (id) => {
   const post = await BlogPost.findOne({
     where: { id },
     include: [{ model: User, as: 'user' },
-    { model: Category, as: 'categories', through: { attributes: [] } }],
+      { model: Category, as: 'categories', through: { attributes: [] } }],
   });
   if (!post) return postDoesntExistError;
   return post;
 };
+
+const findByTerm = async (term) => (BlogPost.findAll({
+  where: { [Op.or]: [{ title: { [Op.like]: `%${term}%` } },
+    { content: { [Op.like]: `%${term}%` } }] },
+  include: [{ model: User, as: 'user' },
+    { model: Category, as: 'categories', through: { attributes: [] } }],
+}));
 
 const create = async ({ title, content, userId, categoryIds }) => {
   const categories = await Category.findAll();
@@ -91,4 +100,4 @@ const remove = async ({ id, userId }) => {
   return post;
 };
 
-module.exports = { findAll, findById, create, update, remove };
+module.exports = { findAll, findById, findByTerm, create, update, remove };

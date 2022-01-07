@@ -6,6 +6,7 @@ const { findAll, findById, create, update, remove } = require('../controllers/Po
 const router = express.Router();
 
 router.get('/', authentication, rescue(findAll));
+router.get('/search', authentication, rescue(findAll));
 router.get('/:id', authentication, rescue(findById));
 router.post('/', authentication, rescue(create));
 router.put('/:id', authentication, rescue(update));

@@ -1,7 +1,11 @@
 const PostsService = require('../services/PostsService');
 const { validatePost } = require('../utils/validations');
 
-const findAll = async (_req, res) => {
+const findAll = async (req, res) => {
+  if (req.query) {
+    const posts = await PostsService.findByTerm(req.query.q);
+    return res.status(200).json(posts);
+  }
   const posts = await PostsService.findAll();
   return res.status(200).json(posts);
 };
@@ -10,6 +14,11 @@ const findById = async (req, res, next) => {
   const post = await PostsService.findById(req.params.id);
   if (post.err) return next(post.err);
   return res.status(200).json(post);
+};
+
+const findByTerm = async (req, res) => {
+  const posts = await PostsService.findByTerm(req.params.searchTerm);
+  return res.status(200).json(posts);
 };
 
 const create = async (req, res, next) => {
@@ -41,4 +50,4 @@ const remove = async (req, res, next) => {
   return res.status(204).json(post);
 };
 
-module.exports = { findAll, findById, create, update, remove };
+module.exports = { findAll, findById, findByTerm, create, update, remove };
