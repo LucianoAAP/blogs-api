@@ -7,6 +7,8 @@ const categoryAlreadyExistsError = {
   },
 };
 
+const findAll = async () => Category.findAll();
+
 const create = async ({ name }) => {
   const category = await Category.findOne({ where: { name } });
   if (category) return categoryAlreadyExistsError;
@@ -14,4 +16,4 @@ const create = async ({ name }) => {
   return newCategory;
 };
 
-module.exports = { create };
+module.exports = { findAll, create };
