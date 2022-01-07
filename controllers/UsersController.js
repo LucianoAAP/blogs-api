@@ -27,4 +27,9 @@ const create = async (req, res, next) => {
   return res.status(201).json({ token });
 };
 
-module.exports = { findAll, findById, create };
+const remove = async (req, res) => {
+  const user = await UsersService.remove(req.user.id);
+  return res.status(204).json(user);
+};
+
+module.exports = { findAll, findById, create, remove };

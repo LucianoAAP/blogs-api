@@ -29,4 +29,6 @@ const create = async ({ displayName, email, password, image }) => {
   return newUser;
 };
 
-module.exports = { findAll, findById, create };
+const remove = async (userId) => User.destroy({ where: { id: userId } });
+
+module.exports = { findAll, findById, create, remove };
