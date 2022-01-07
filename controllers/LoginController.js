@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
   if (entriesValidation.err) return next(entriesValidation.err);
   const user = await loginService(req.body);
   if (user.err) return next(user.err);
-  const payload = { email: req.body.email };
+  const payload = { id: user.id };
   const token = jwt.sign(payload, secret, jwtConfig);
   return res.status(200).json({ token });
 };

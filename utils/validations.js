@@ -89,4 +89,11 @@ const validateCategory = ({ name }) => {
   return NO_ERROR_MESSAGE;
 };
 
-module.exports = { validateUser, validateLogin, validateCategory };
+const validatePost = ({ title, content, categoryIds }) => {
+  if (!title) return getIsRequiredError('title');
+  if (!content) return getIsRequiredError('content');
+  if (!categoryIds) return getIsRequiredError('categoryIds');
+  return NO_ERROR_MESSAGE;
+};
+
+module.exports = { validateUser, validateLogin, validateCategory, validatePost };
