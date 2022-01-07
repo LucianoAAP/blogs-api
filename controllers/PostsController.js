@@ -2,7 +2,7 @@ const PostsService = require('../services/PostsService');
 const { validatePost } = require('../utils/validations');
 
 const findAll = async (req, res) => {
-  if (req.query) {
+  if (req.query.q) {
     const posts = await PostsService.findByTerm(req.query.q);
     return res.status(200).json(posts);
   }
