@@ -16,11 +16,6 @@ const findById = async (req, res, next) => {
   return res.status(200).json(post);
 };
 
-const findByTerm = async (req, res) => {
-  const posts = await PostsService.findByTerm(req.params.searchTerm);
-  return res.status(200).json(posts);
-};
-
 const create = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
   const userId = req.user.id;
@@ -50,4 +45,4 @@ const remove = async (req, res, next) => {
   return res.status(204).json(post);
 };
 
-module.exports = { findAll, findById, findByTerm, create, update, remove };
+module.exports = { findAll, findById, create, update, remove };
