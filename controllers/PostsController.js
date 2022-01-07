@@ -6,6 +6,12 @@ const findAll = async (_req, res) => {
   return res.status(200).json(posts);
 };
 
+const findById = async (req, res, next) => {
+  const post = await PostsService.findById(req.params.id);
+  if (post.err) return next(post.err);
+  return res.status(200).json(post);
+};
+
 const create = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
   const userId = req.user.id;
@@ -16,4 +22,4 @@ const create = async (req, res, next) => {
   return res.status(201).json({ id: post.id, userId, title, content });
 };
 
-module.exports = { findAll, create };
+module.exports = { findAll, findById, create };

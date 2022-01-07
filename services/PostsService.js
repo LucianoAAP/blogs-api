@@ -6,6 +6,13 @@ const categoryIdsNotFoundError = {
   err: { status: 400, message: '"categoryIds" not found' },
 };
 
+const postDoesntExistError = {
+  err: {
+    status: 404,
+    message: 'Post does not exist',
+  },
+};
+
 const sequelize = new Sequelize(
   process.env.NODE_ENV === 'test' ? config.test : config.development,
 );
@@ -14,6 +21,16 @@ const findAll = async () => (BlogPost.findAll({
   include: [{ model: User, as: 'user' },
   { model: Category, as: 'categories', through: { attributes: [] } }],
 }));
+
+const findById = async (id) => {
+  const post = await BlogPost.findOne({
+    where: { id },
+    include: [{ model: User, as: 'user' },
+    { model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+  if (!post) return postDoesntExistError;
+  return post;
+};
 
 const create = async ({ title, content, userId, categoryIds }) => {
   const categories = await Category.findAll();
@@ -36,4 +53,4 @@ const create = async ({ title, content, userId, categoryIds }) => {
   }
 };
 
-module.exports = { findAll, create };
+module.exports = { findAll, findById, create };
