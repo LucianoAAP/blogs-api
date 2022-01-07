@@ -22,4 +22,15 @@ const create = async (req, res, next) => {
   return res.status(201).json({ id: post.id, userId, title, content });
 };
 
-module.exports = { findAll, findById, create };
+const update = async (req, res, next) => {
+  const { id } = req.params;
+  const { title, content, categoryIds } = req.body;
+  const userId = req.user.id;
+  const entriesValidation = validatePost({ title, content, categoryIds: [] });
+  if (entriesValidation.err) return next(entriesValidation.err);
+  const post = await PostsService.update({ id, title, content, userId, categoryIds });
+  if (post.err) return next(post.err);
+  return res.status(200).json(post);
+};
+
+module.exports = { findAll, findById, create, update };

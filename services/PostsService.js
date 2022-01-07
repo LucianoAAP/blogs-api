@@ -13,6 +13,20 @@ const postDoesntExistError = {
   },
 };
 
+const unauthorizedUserError = {
+  err: {
+    status: 401,
+    message: 'Unauthorized user',
+  },
+};
+
+const editCategoriesError = {
+  err: {
+    status: 400,
+    message: 'Categories cannot be edited',
+  },
+};
+
 const sequelize = new Sequelize(
   process.env.NODE_ENV === 'test' ? config.test : config.development,
 );
@@ -53,4 +67,19 @@ const create = async ({ title, content, userId, categoryIds }) => {
   }
 };
 
-module.exports = { findAll, findById, create };
+const update = async ({ id, title, content, userId, categoryIds }) => {
+  if (categoryIds) return editCategoriesError;
+  const currentPost = await BlogPost.findByPk(id);
+  if (currentPost.userId !== userId) return unauthorizedUserError;
+  await BlogPost.update(
+    { title, content, updated: new Date() },
+    { where: { id } },
+  );
+  const newPost = await BlogPost.findOne({
+    where: { id },
+    include: { model: Category, as: 'categories', through: { attributes: [] } },
+  });
+  return newPost;
+};
+
+module.exports = { findAll, findById, create, update };
