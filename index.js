@@ -6,6 +6,7 @@ app.use(express.json());
 
 app.use('/user', require('./routers/UsersRouter'));
 app.use('/login', require('./routers/LoginRouter'));
+app.use('/categories', require('./routers/CategoriesRouter'));
 
 app.use(errorMiddleware);
 

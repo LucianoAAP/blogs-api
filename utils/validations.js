@@ -84,4 +84,9 @@ const validateLogin = ({ email, password }) => {
   return NO_ERROR_MESSAGE;
 };
 
-module.exports = { validateUser, validateLogin };
+const validateCategory = ({ name }) => {
+  if (!name) return getIsRequiredError('name');
+  return NO_ERROR_MESSAGE;
+};
+
+module.exports = { validateUser, validateLogin, validateCategory };
