@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const errorMiddleware = require('./middlewares/error');
 
@@ -11,4 +12,6 @@ app.use('/post', require('./routers/PostsRouter'));
 
 app.use(errorMiddleware);
 
-app.listen(3000, () => console.log('ouvindo porta 3000!'));
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => console.log(`Ouvindo na porta ${port}!`));
