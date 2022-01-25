@@ -6,7 +6,7 @@ const { validateUser } = require('../utils/validations');
 const secret = process.env.JWT_SECRET;
 const jwtConfig = { expiresIn: '1h' };
 
-const findAll = async (req, res) => {
+const findAll = async (_req, res) => {
   const users = await UsersService.findAll();
   return res.status(200).json(users);
 };
