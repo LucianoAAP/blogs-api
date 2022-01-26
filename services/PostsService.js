@@ -65,7 +65,7 @@ const create = async ({ title, content, userId, categoryIds }) => {
     const post = await BlogPost
       .create({ title, content, userId, published: new Date(), updated: new Date() },
       { transaction: t });
-      const postsCategories = categoryIds.map(async (categoryId) => (PostCategory
+    const postsCategories = categoryIds.map(async (categoryId) => (PostCategory
       .create({ post_id: post.id, category_id: categoryId })));
     Promise.all(postsCategories, { transaction: t });
     await t.commit();
