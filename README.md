@@ -33,11 +33,13 @@ This project requires Node.js and MySQL.
 
 ## Starting the application
 
-1. First, drop the database if it already exists:
+1. First, start your MySQL service:
+- `sudo service mysql start`
+2. Then, drop the database if it already exists:
 - `npm run drop`
-2. Then, create the database and the tables
+3. Then, create the database and the tables
 - `npm run prestart`
-3. Then, populate the tables
+4. Then, populate the tables
 - `npm run seed`
-4. Finally, start the application
+5. Finally, start the application
 - `npm start`
