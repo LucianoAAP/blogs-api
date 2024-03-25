@@ -43,3 +43,11 @@ This project requires Node.js and MySQL.
 - `npm run seed`
 5. Finally, start the application
 - `npm start`
+
+# Contact
+
+## Luciano Almeida
+
+- Linkedin: https://www.linkedin.com/in/lucianoaap/
+- Github: https://www.linkedin.com/in/lucianoaap/
+- Email: lucianoalmeidaap@gmail.com
